@@ -26,11 +26,16 @@ You can build optimized version of the benchmark for specific target architectur
 ```bash
 make -f Makefile-x86
 ```
-or
+```bash
+make -f Makefile-avx
+```
+```bash
+make -f Makefile-avx2
+```
 ```bash
 make -f Makefile-galileo
 ```
-etc. Or simply run it -- and it'll build default version of benchmark for you as well:
+Or simply run it -- and it'll build native version of the benchmark for your system as well:
 ```bash
 ./Run
 ```
