@@ -129,7 +129,7 @@ else
   # For Intel Quark X1000 SOC (Galileo etc.)
   #OPTON = -Ofast -Wa,-momit-lock-prefix=yes
   OPTON = -Ofast -fomit-frame-pointer \
-	-march=pentium -mtune=i486 -fprefetch-loop-arrays \
+	-march=pentium -mtune=i486 -funroll-loops -ftree-loop-distribution \
 	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
 	-fexpensive-optimizations -finline-small-functions -findirect-inlining \
 	--param max-inline-insns-single=200 --param max-inline-insns-auto=200 \
