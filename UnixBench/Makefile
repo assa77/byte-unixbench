@@ -57,7 +57,7 @@ GL_LIBS = -lGL -lXext -lX11
 # Run script to the name of the compiler you want to test.
 CC=gcc
 
-# OPTIMISATION SETTINGS:
+# OPTIMIZATION SETTINGS:
 # Use gcc option if defined UB_GCC_OPTIONS via "Environment variable" or "Command-line arguments".
 ifdef UB_GCC_OPTIONS
   OPTON = $(UB_GCC_OPTIONS)
@@ -86,7 +86,7 @@ else
   ## gcc optimization flags
   ## (-ffast-math) disables strict IEEE or ISO rules/specifications for math funcs
   #OPTON = -O3 -ffast-math
-  OPTON = -Ofast -ffast-math
+  OPTON = -Ofast
 
   ## OS detection.  Comment out if gmake syntax not supported by other 'make'. 
   OSNAME:=$(shell uname -s)
@@ -260,7 +260,8 @@ $(PROGDIR)/select:   $(SRCDIR)/time-polling.c
 $(PROGDIR)/select:   CFLAGS += -DUNIXBENCH -DHAS_SELECT
 
 $(PROGDIR)/whetstone-double: $(SRCDIR)/whets.c
-$(PROGDIR)/whetstone-double: CFLAGS += -DDP -DGTODay -DUNIXBENCH
+#$(PROGDIR)/whetstone-double: CFLAGS += -DDP -DGTODay -DUNIXBENCH
+$(PROGDIR)/whetstone-double: CFLAGS += -DDP -DUNIX -DUNIXBENCH
 $(PROGDIR)/whetstone-double: LDFLAGS += -lm
 
 $(PROGDIR)/pipe: $(SRCDIR)/pipe.c $(SRCDIR)/timeit.c

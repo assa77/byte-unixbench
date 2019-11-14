@@ -30,15 +30,13 @@ make -f Makefile-x86
 make -f Makefile-avx
 ```
 ```bash
-make -f Makefile-avx2
-```
-```bash
 make -f Makefile-galileo
 ```
-Or simply run it -- and it'll build native version of the benchmark for your system as well:
+etc. Or simply run it -- and it'll build native version of the benchmark for your system as well:
 ```bash
 ./Run
 ```
+See the *[USAGE](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/USAGE)* file for other options.
 
 Best regards, [Alexander M. Albertian](mailto:assa@4ip.ru)
 
