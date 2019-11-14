@@ -1,5 +1,44 @@
 # byte-unixbench
 
+**UnixBench** is the portable benchmark for xNIX systems, originally developed by BYTE Magazine.
+
+## Installation
+
+You have to install required packages before, e.g. for Debian-like systems:
+```bash
+# with graphical tests
+sudo apt-get install libx11-dev libgl1-mesa-dev libxext-dev perl perl-modules gcc make unzip
+```
+```bash
+# without graphical tests
+sudo apt-get install perl perl-modules gcc make unzip
+```
+Then you can download **UnixBench** from [this repository](https://github.com/assa77/byte-unixbench):
+```bash
+mkdir -p ~/dev
+cd ~/dev
+wget https://github.com/assa77/byte-unixbench/archive/master.zip
+unzip master.zip
+cd byte-unixbench-master/UnixBench
+make clean
+```
+You can build optimized version of the benchmark for specific target architecture by running, e.g.
+```bash
+make -f Makefile-x86
+```
+or
+```bash
+make -f Makefile-galileo
+```
+etc. Or simply run it -- and it'll build default version of benchmark for you as well:
+```bash
+./Run
+```
+
+Best regards, [Alexander M. Albertian](mailto:assa@4ip.ru)
+
+## Original description
+
 **UnixBench** is the original BYTE UNIX benchmark suite, updated and revised by many people over the years.
 
 The purpose of UnixBench is to provide a basic indicator of the performance of a Unix-like system; hence, multiple 
