@@ -34,7 +34,7 @@ make -f Makefile-galileo
 ```
 etc. Or simply `Run` it -- and it'll build native version of the benchmark for your system as well:
 ```bash
-./UnixBench/Run
+./Run
 ```
 See the *[USAGE](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/USAGE)* file for other options.
 
