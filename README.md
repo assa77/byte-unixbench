@@ -32,9 +32,9 @@ make -f Makefile-avx
 ```bash
 make -f Makefile-galileo
 ```
-etc. Or simply `./Run` it -- and it'll build native version of the benchmark for your system as well:
+etc. Or simply `Run` it -- and it'll build native version of the benchmark for your system as well:
 ```bash
-./Run
+./UnixBench/Run
 ```
 See the *[USAGE](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/USAGE)* file for other options.
 
