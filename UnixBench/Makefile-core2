@@ -88,51 +88,47 @@ else
   #OPTON = -O3 -ffast-math
   #OPTON = -Ofast
 
-  ## For Intel Core i7 with AVX
-  ##OPTON = -O3 -ffast-math -fallow-store-data-races -fno-protect-parens
-  ##	--param max-inline-insns-single-O2=200 --param max-inline-insns-single-O2=200
+  ## As -Ofast:
+  ##	-O3 -ffast-math -fallow-store-data-races -fno-protect-parens
+  ## Enclosed by -finline-limit=500:
+  ##	--param max-inline-insns-single=250 --param max-inline-insns-auto=250 \
+  ##	--param max-inline-insns-single-O2=250 --param max-inline-insns-single-O2=250
+  ## Enabled at -O3 and above:
+  ##	-ftree-vectorize -ftree-vect-loop-version
   ## Some regression occurs with:
-  ##	-funroll-loops -ftree-loop-distribution
-  ##	-mfpmath=sse
-  ##	-mfpmath=sse+387
-  #OPTON = -Ofast -fomit-frame-pointer \
-  #	-march=corei7 -mtune=corei7 -mavx -ftree-vectorize \
-  #	-fprefetch-loop-arrays -ftree-vect-loop-version \
+  ##	-funroll-loops (and) -ftree-loop-distribution (on modern architectures)
+  ##	-mfpmath=sse (or) -mfpmath=sse+387
+  ##	-msse4.1 (or) -mavx (or) -mavx2 (etc.)
+  ## For Generic x86 with SIMD
+  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
+  #	-march=native -mtune=native -fprefetch-loop-arrays \
   #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
-  #	-fexpensive-optimizations -finline-small-functions -findirect-inlining \
-  #	--param max-inline-insns-single=200 --param max-inline-insns-auto=200 \
-  #	--param l1-cache-line-size=64
-  ## For Intel Core i7 with AVX2
-  #OPTON = -Ofast -fomit-frame-pointer \
-  #	-march=corei7 -mtune=corei7 -mavx2 -ftree-vectorize \
-  #	-fprefetch-loop-arrays -ftree-vect-loop-version \
-  #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
-  #	-fexpensive-optimizations -finline-small-functions -findirect-inlining \
-  #	--param max-inline-insns-single=200 --param max-inline-insns-auto=200 \
   #	--param l1-cache-line-size=64
   # For Intel Core2
-  OPTON = -Ofast -fomit-frame-pointer \
-	-march=core2 -mtune=core2 -msse4.1 -ftree-vectorize \
-	-fprefetch-loop-arrays -ftree-vect-loop-version \
+  OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+	-finline-small-functions -findirect-inlining \
+	-march=core2 -mtune=core2 -msse4.1 -fprefetch-loop-arrays \
 	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
-	-fexpensive-optimizations -finline-small-functions -findirect-inlining \
-	--param max-inline-insns-single=200 --param max-inline-insns-auto=200 \
 	--param l1-cache-line-size=64
-  ## For Generic x86 with SIMD
-  #OPTON = -Ofast -fomit-frame-pointer \
-  #	-march=native -mtune=native -ftree-vectorize \
-  #	-fprefetch-loop-arrays -ftree-vect-loop-version \
+  ## For Intel Core i7 with AVX
+  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
+  #	-march=corei7 -mtune=corei7 -mavx -fprefetch-loop-arrays \
   #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
-  #	-fexpensive-optimizations -finline-small-functions -findirect-inlining \
-  #	--param max-inline-insns-single=200 --param max-inline-insns-auto=200 \
+  #	--param l1-cache-line-size=64
+  ## For Intel Core i7 with AVX2
+  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
+  #	-march=corei7 -mtune=corei7 -mavx2 -fprefetch-loop-arrays \
+  #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
   #	--param l1-cache-line-size=64
   ## For Intel Quark X1000 SOC (Galileo etc.)
   ##OPTON = -Ofast -Wa,-momit-lock-prefix=yes
-  #OPTON = -Ofast -fomit-frame-pointer \
+  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
   #	-march=pentium -mtune=i486 -funroll-loops -ftree-loop-distribution \
   #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
-  #	-fexpensive-optimizations -finline-small-functions -findirect-inlining \
-  #	--param max-inline-insns-single=200 --param max-inline-insns-auto=200 \
   #	--param l1-cache-line-size=64
 
   MAKEFILE_NAME := $(firstword $(MAKEFILE_LIST))
