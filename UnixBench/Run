@@ -124,8 +124,10 @@ my $fs = [
 ];
 
 my $oldsystem = [
-    "execl", "fstime", "fsbuffer", "fsdisk", "pipe", "context1", "spawn",
-    "syscall"
+# Due to the poor repeatability of file system test results (especially parallel ones)
+#   on modern systems they're excluded from the basic test suite!!!
+#   "execl", "fstime", "fsbuffer", "fsdisk", "pipe", "context1", "spawn", "syscall"
+    "execl", "pipe", "context1", "spawn", "syscall"
 ];
 
 my $system = [

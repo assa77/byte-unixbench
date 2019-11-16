@@ -4,9 +4,11 @@
 dhry2reg|10|lps|116700|116700|2
 whetstone-double|10|MWIPS|55.0|55.0|2
 execl|20|lps|43.0|43.0|1
-fstime|20|KBps|3960|3960|1
-fsbuffer|20|KBps|1655|1655|1
-fsdisk|20|KBps|5800|5800|1
+# Due to the poor repeatability of file system test results (especially parallel ones)
+#   on modern systems they're excluded from the basic test suite!!!
+#fstime|20|KBps|3960|3960|1
+#fsbuffer|20|KBps|1655|1655|1
+#fsdisk|20|KBps|5800|5800|1
 pipe|10|lps|12440|12440|2
 context1|10|lps|4000|4000|2
 spawn|20|lps|126|126|1
