@@ -682,7 +682,7 @@ sub mergeParams {
 sub processCpuFlags {
     my ( $flagStr ) = @_;
 
-    my @names;
+    my @names = [ ];
     foreach my $f (sort split(/\s+/, $flagStr)) {
         my $name = $x86CpuFlags->{$f};
         push(@names, $name) if $name;
@@ -705,20 +705,27 @@ sub getCpuInfo {
 
         my $cpus = [ ];
         my $cpu = 0;
+        $cpus->[$cpu]{'model'} = "***unknown***";
+        $cpus->[$cpu]{'bogo'}  = 0;
+        $cpus->[$cpu]{'flags'} = "";
         while (<$fd>) {
             chomp;
             my ( $field, $val ) = split(/[ \t]*:[ \t]*/);
             next if (!$field || !$val);
-            if ($field eq "processor") {
+            if (lc $field eq lc "processor") {
                 $cpu = $val;
-            } elsif ($field eq "model name") {
+                $cpus->[$cpu]{'model'} = "***unknown***";
+                $cpus->[$cpu]{'bogo'}  = 0;
+                $cpus->[$cpu]{'flags'} = "";
+            } elsif (lc $field eq lc "model name") {
                 my $model = $val;
                 $model =~ s/  +/ /g;
                 $cpus->[$cpu]{'model'} = $model;
-            } elsif ($field eq "bogomips") {
+            } elsif (lc $field eq lc "bogomips") {
                 $cpus->[$cpu]{'bogo'} = $val;
-            } elsif ($field eq "flags") {
-                $cpus->[$cpu]{'flags'} = processCpuFlags($val);
+            } elsif (lc $field eq lc "flags" ||
+                lc $field eq lc "features") {
+                $cpus->[$cpu]{'flags'} = processCpuFlags($val) // "";
             }
         }
 
@@ -738,7 +745,7 @@ sub getCpuInfo {
         for ($cpu = 0; $cpu < $ncpu; $cpu++) {
             $cpus->[$cpu]{'model'} = $model;
             $cpus->[$cpu]{'bogo'}  = 0;
-            $cpus->[$cpu]{'flags'} = processCpuFlags($flags);
+            $cpus->[$cpu]{'flags'} = processCpuFlags($flags) // "";
         }
         $cpus;
     }
