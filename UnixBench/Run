@@ -682,7 +682,7 @@ sub mergeParams {
 sub processCpuFlags {
     my ( $flagStr ) = @_;
 
-    my @names = [ ];
+    my @names;
     foreach my $f (sort split(/\s+/, $flagStr)) {
         my $name = $x86CpuFlags->{$f};
         push(@names, $name) if $name;
