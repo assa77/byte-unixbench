@@ -98,7 +98,6 @@ else
   ## Some regression occurs with:
   ##	-funroll-loops (and) -ftree-loop-distribution (on modern architectures)
   ##	-mfpmath=sse (or) -mfpmath=sse+387
-  ##	-msse4.1 (or) -mavx (or) -mavx2 (etc.)
   # For Generic x86 with SIMD
   OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
 	-finline-small-functions -findirect-inlining \

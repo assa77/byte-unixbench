@@ -38,10 +38,11 @@ etc. Or simply `Run` it -- and it'll build native version of the benchmark for y
 ```
 See the *[USAGE](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/USAGE)* file for other options.
 
+You can find some benchmarking results on emulators and in virtual environments (and on physical systems too of course) in *[benchmarks.txt](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/results/benchmarks.txt)* (*[benchmarks-lite.txt](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/results/benchmarks-lite.txt)*).
+
 **CAUTION!** *Due to the poor repeatability of file system test results (especially parallel ones) on modern systems they're excluded from the basic test suite.*
 
-Best regards,
-*[Alexander M. Albertian](mailto:assa@4ip.ru)*
+Best regards, *[Alexander M. Albertian](mailto:assa@4ip.ru)*
 
 ## Original description
 

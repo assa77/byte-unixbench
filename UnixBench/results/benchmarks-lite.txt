@@ -1,0 +1,117 @@
+***UnixBench***
+
+**CAUTION!** *Due to the poor repeatability of file system test results (especially parallel ones) on modern systems they're excluded from the basic test suite.*
+
+
+########## QEMU 1x ARM1176 (Raspberry Pi) (698 bogomips)
+
+**In case of emulation, better optimization options had a negative effect on integer performance.**
+
+-> Options: -march=native -mtune=native                                                 -> Old options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math
+1 CPU in system; running 1 parallel copy of tests                                       1 CPU in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables         995734.5 lps   (10.1 s, 7 samples)         Dhrystone 2 using register variables        1171181.6 lps   (10.1 s, 7 samples)
+Double-Precision Whetstone                      326.0 MWIPS (10.0 s, 7 samples)         Double-Precision Whetstone                      317.8 MWIPS (10.0 s, 7 samples)
+
+
+########## QEMU 4x Cortex-a57 (125 bogomips)
+
+**In case of emulation, better optimization options had a negative effect on performance.**
+**Emulation of 64-bit ARM instructions slightly slower than 32-bit ones. But additional "cores" increase performance as expected.**
+
+-> Options: -march=native -mtune=native                                                 -> Old options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math
+4 CPUs in system; running 1 parallel copy of tests                                      0 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables         995125.8 lps   (10.1 s, 7 samples)         Dhrystone 2 using register variables        1140629.3 lps   (10.1 s, 7 samples)
+Double-Precision Whetstone                      181.0 MWIPS (10.0 s, 7 samples)         Double-Precision Whetstone                      188.3 MWIPS (9.9 s, 7 samples)
+
+4 CPUs in system; running 4 parallel copies of tests                                    0 CPUs in system; running 4 parallel copies of tests
+Dhrystone 2 using register variables        3820216.9 lps   (10.2 s, 7 samples)         Dhrystone 2 using register variables        4451883.1 lps   (10.2 s, 7 samples)
+Double-Precision Whetstone                      705.1 MWIPS (9.9 s, 7 samples)          Double-Precision Whetstone                      739.7 MWIPS (10.0 s, 7 samples)
+
+
+########## Windows Subsystem for Linux (WSL) x86_64 12x Intel(R) Xeon(R) CPU E5-1650 @ 3.20GHz (6402 bogomips)
+
+**make -f Makefile-avx**
+
+-> Linux wsl 4.4.0-18362-Microsoft #476-Microsoft Fri Nov 01 16:53:00 PST 2019 x86_64 x86_64 x86_64 GNU/Linux
+12 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables       43113781.0 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     4012.2 MWIPS (12.9 s, 7 samples)
+
+12 CPUs in system; running 12 parallel copies of tests
+Dhrystone 2 using register variables      286340392.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                    50072.7 MWIPS (9.8 s, 7 samples)
+
+
+########## Microsoft Hyper-V Debian Wheezy x86 12x Intel(R) Xeon(R) CPU E5-1650 @ 3.20GHz (6400 bogomips)
+
+**make -f Makefile-avx**
+
+-> Linux hyperv 3.16.0-10-686-pae #1 SMP Debian 3.16.74-1~deb7u1 (2019-09-30) i686 GNU/Linux
+12 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables       32720116.5 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     4405.6 MWIPS (10.1 s, 7 samples)
+
+12 CPUs in system; running 12 parallel copies of tests
+Dhrystone 2 using register variables      209079355.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                    46880.8 MWIPS (10.1 s, 7 samples)
+
+
+########## Intel Galileo 1x Intel Quark x1000 400MHz MCU (798 bogomips)
+
+**For Debian, there is an additional negative effect due to kernel compilation options such as PREEMPT, etc.**
+**make -f Makefile-galileo**
+
+-> Yocto Linux										-> Debian Linux
+-> Linux galileo 3.8.7-yocto-standard #1 Thu May 12 08:17:14 PDT 2016 i586 GNU/Linux	-> Linux galileo 3.8.7-assa #1 PREEMPT Tue Jul 2 11:58:20 MSK 2019 i586 GNU/Linux
+1 CPU in system; running 1 parallel copy of tests                                       1 CPU in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables         513043.6 lps   (10.0 s, 7 samples)         Dhrystone 2 using register variables         448276.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                      164.1 MWIPS (9.9 s, 7 samples)          Double-Precision Whetstone                      163.3 MWIPS (9.9 s, 7 samples)
+
+
+########## Raspberry Pi 1x ARM1176JZF-S 700-1000 MHz
+
+**Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
+
+1 CPU in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables        2357526.3 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                      346.2 MWIPS (9.9 s, 7 samples)
+
+
+########## Raspberry Pi 2 model B 2x ARM Cortex-A7 900-1000 MHz
+
+**Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
+
+4 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables        2871895.5 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                      430.7 MWIPS (9.5 s, 7 samples)
+
+4 CPUs in system; running 4 parallel copies of tests
+Dhrystone 2 using register variables        8042979.4 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     1217.7 MWIPS (9.7 s, 7 samples)
+
+
+########## Raspberry Pi 3 model B 4x Cortex-A53 1.2-1.4 GHz
+
+**Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
+
+4 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables        4277736.0 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                      708.1 MWIPS (9.1 s, 7 samples)
+
+4 CPUs in system; running 4 parallel copies of tests
+Dhrystone 2 using register variables        8957839.0 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     1575.1 MWIPS (9.7 s, 7 samples)
+
+
+########## 2x Intel(R) Core(TM)2 Duo CPU P8700 @ 2.53GHz (5054 bogomips)
+
+**Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
+**(https://gist.github.com/mmitou/3f88d9b1f462a024a626)**
+
+2 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables       25015421.9 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     2791.6 MWIPS (10.0 s, 7 samples)
+
+2 CPUs in system; running 2 parallel copies of tests
+Dhrystone 2 using register variables       37145426.0 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     5382.1 MWIPS (10.0 s, 7 samples)
