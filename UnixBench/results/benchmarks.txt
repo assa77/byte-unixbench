@@ -54,7 +54,7 @@ System Call Overhead                          15000.0      13083.0      8.7     
 System Benchmarks Index Score                                          17.7             System Benchmarks Index Score                                          17.5
 
 
-########## QEMU 4x Cortex-a57 (125 bogomips)
+########## QEMU 4x AArch64 Cortex-a57 (125 bogomips)
 
 **In case of emulation, better optimization options had a negative effect on performance.**
 **Emulation of 64-bit ARM instructions slightly slower than 32-bit ones. But additional "cores" increase performance as expected.**
@@ -421,7 +421,7 @@ System Call Overhead                          15000.0     490571.0    327.0
 System Benchmarks Index Score                                         116.9
 
 
-########## Raspberry Pi 2 model B 2x ARM Cortex-A7 900-1000 MHz
+########## Raspberry Pi 2 model B 4x ARM Cortex-A7 900-1000 MHz
 
 **Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
 
@@ -509,7 +509,7 @@ System Call Overhead                          15000.0    1125518.6    750.3
 System Benchmarks Index Score                                         313.1
 
 
-########## Raspberry Pi 3 model B 4x Cortex-A53 1.2-1.4 GHz
+########## Raspberry Pi 3 model B 4x ARM Cortex-A53 1.2-1.4 GHz
 
 **Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
 
