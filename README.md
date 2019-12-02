@@ -55,7 +55,9 @@ There is no noticeable difference between *x86/x86-64* and *sse/avx/avx2* result
 
 Loops unrolling results in a negligible performance increase on modern architectures (with branch predictor and so on) and sometimes leads to opposite results, but it looks good on older CPUs.
 
-The Interprocedural Optimization (IPO)/Link Time Optimization (LTO) is very effective in almost any case - in native (bare metal) environment, virtual environment, within emulators, etc. And there are significant performance improvements as a result of better optimization in newer versions of GCC.
+The Interprocedural Optimization (IPO)/Link Time Optimization (LTO) is very effective in almost any case - in native (bare metal) environment, virtual environment, within emulators, etc.
+
+And there are significant performance improvements as a result of better optimization in newer versions of GCC.
 
 **CAUTION!** *Due to the poor repeatability of file system test results (especially parallel ones) on modern systems they're excluded from the basic test suite.*
 
