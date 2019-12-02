@@ -23,14 +23,25 @@ cd byte-unixbench-master/UnixBench
 make clean
 ```
 You can build optimized version of the benchmark for specific target architecture by running, e.g.
+##### x86:
 ```bash
 make -f Makefile-x86
 ```
+##### x86-64:
 ```bash
-make -f Makefile-avx
+make -f Makefile-x86-64
 ```
+##### x86-64 with -mavx:
 ```bash
-make -f Makefile-galileo
+make -f Makefile-x86-64-avx
+```
+##### x86-64 with -mavx and -mfpmath=sse+387:
+```bash
+make -f Makefile-x86-64-avx-sse
+```
+##### x86 Intel Quark X1000 SOC:
+```bash
+make -f Makefile-x86-galileo
 ```
 etc. Or simply `Run` it -- and it'll build native version of the benchmark for your system as well:
 ```bash
@@ -38,7 +49,10 @@ etc. Or simply `Run` it -- and it'll build native version of the benchmark for y
 ```
 See the *[USAGE](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/USAGE)* file for other options.
 
-You can find some benchmarking results on emulators and in virtual environments (and on physical systems too of course) in *[benchmarks.txt](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/results/benchmarks.txt)* (*[benchmarks-lite.txt](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/results/benchmarks-lite.txt)*).
+You can find some benchmarking results within emulators and in virtual environments (and on bare metal too of course) in *[benchmarks.txt](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/results/benchmarks.txt)* (*[benchmarks-lite.txt](https://github.com/assa77/byte-unixbench/blob/master/UnixBench/results/benchmarks-lite.txt)*).
+There is no noticeable difference between *x86/x86-64* and *sse/avx/avx2* results, at least without *-mfpmath=sse* (or *sse+387*) option. But there is some performance regression when using these options with older versions of GCC (4.x, etc.) and for *x86-64*. And using older versions, it seems that there is no automatic vectorization at all, because the **AVX2** version works on *Intel Sandy Bridge* processor as well, but it's **AVX** only capable.
+Loops unrolling results in a negligible performance increase on modern architectures (with branch predictor and so on) and sometimes leads to opposite results, but it looks good on older CPUs.
+The Interprocedural Optimization (IPO)/Link Time Optimization (LTO) is very effective in almost any case - in native (bare metal) environment, virtual environment, within emulators, etc. And there are significant performance improvements as a result of better optimization in newer versions of GCC.
 
 **CAUTION!** *Due to the poor repeatability of file system test results (especially parallel ones) on modern systems they're excluded from the basic test suite.*
 
