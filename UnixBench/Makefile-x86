@@ -86,7 +86,7 @@ else
   ## gcc optimization flags
   ## (-ffast-math) disables strict IEEE or ISO rules/specifications for math funcs
   #OPTON = -O3 -ffast-math
-  #OPTON = -Ofast
+  #OPTON = -Ofast -flto
 
   ## As -Ofast:
   ##	-O3 -ffast-math -fallow-store-data-races -fno-protect-parens
@@ -98,35 +98,61 @@ else
   ## Some regression occurs with:
   ##	-funroll-loops (and) -ftree-loop-distribution (on modern architectures)
   ##	-mfpmath=sse (or) -mfpmath=sse+387
-  # For Generic x86 with SIMD
-  OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  ## For Generic x86-64 CPU with SIMD (native mode)
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
+  #	-m64 -march=native -mtune=native -fprefetch-loop-arrays \
+  #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
+  #	--param l1-cache-line-size=64
+  ## For Generic x86 CPU with SIMD (native mode)
+  OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
 	-finline-small-functions -findirect-inlining \
-	-march=native -mtune=native -fprefetch-loop-arrays \
+	-m32 -march=native -mtune=native -fprefetch-loop-arrays \
 	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
 	--param l1-cache-line-size=64
-  ## For Intel Core2
-  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  ## For Intel Core2 x86-64
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
   #	-finline-small-functions -findirect-inlining \
-  #	-march=core2 -mtune=core2 -msse4.1 -fprefetch-loop-arrays \
+  #	-m64 -march=core2 -mtune=core2 -msse4.1 -fprefetch-loop-arrays \
   #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
   #	--param l1-cache-line-size=64
-  ## For Intel Core i7 with AVX
-  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  ## For Intel Core2 x86
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
   #	-finline-small-functions -findirect-inlining \
-  #	-march=corei7 -mtune=corei7 -mavx -fprefetch-loop-arrays \
+  #	-m32 -march=core2 -mtune=core2 -msse4.1 -fprefetch-loop-arrays \
   #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
   #	--param l1-cache-line-size=64
-  ## For Intel Core i7 with AVX2
-  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  ## For Intel Core i7 x86-64 with AVX
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
   #	-finline-small-functions -findirect-inlining \
-  #	-march=corei7 -mtune=corei7 -mavx2 -fprefetch-loop-arrays \
+  #	-m64 -march=corei7 -mtune=corei7 -mavx -fprefetch-loop-arrays \
+  #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
+  #	--param l1-cache-line-size=64
+  ## For Intel Core i7 x86 with AVX
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
+  #	-m32 -march=corei7 -mtune=corei7 -mavx -fprefetch-loop-arrays \
+  #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
+  #	--param l1-cache-line-size=64
+  ## For Intel Core i7 x86-64 with AVX2
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
+  #	-m64 -march=corei7 -mtune=corei7 -mavx2 -fprefetch-loop-arrays \
+  #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
+  #	--param l1-cache-line-size=64
+  ## For Intel Core i7 x86 with AVX2
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
+  #	-finline-small-functions -findirect-inlining \
+  #	-m32 -march=corei7 -mtune=corei7 -mavx2 -fprefetch-loop-arrays \
   #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
   #	--param l1-cache-line-size=64
   ## For Intel Quark X1000 SOC (Galileo etc.)
-  ##OPTON = -Ofast -Wa,-momit-lock-prefix=yes
-  #OPTON = -Ofast -fomit-frame-pointer -finline-limit=500 \
+  ## Unsupported without the patch:
+  ##	-Wa,-momit-lock-prefix=yes
+  #OPTON = -Ofast -flto -fomit-frame-pointer -finline-limit=500 \
   #	-finline-small-functions -findirect-inlining \
-  #	-march=pentium -mtune=i486 -funroll-loops -ftree-loop-distribution \
+  #	-m32 -march=pentium -mtune=i486 \
+  #	-funroll-loops -ftree-loop-distribution \
   #	-falign-loops=8 -falign-jumps=8 -falign-functions=16 \
   #	--param l1-cache-line-size=64
 

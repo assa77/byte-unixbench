@@ -7,10 +7,12 @@
 
 **In case of emulation, better optimization options had a negative effect on integer performance.**
 
--> Options: -march=native -mtune=native                                                 -> Old options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math
-1 CPU in system; running 1 parallel copy of tests                                       1 CPU in system; running 1 parallel copy of tests
-Dhrystone 2 using register variables         995734.5 lps   (10.1 s, 7 samples)         Dhrystone 2 using register variables        1171181.6 lps   (10.1 s, 7 samples)
-Double-Precision Whetstone                      326.0 MWIPS (10.0 s, 7 samples)         Double-Precision Whetstone                      317.8 MWIPS (10.0 s, 7 samples)
+-> gcc (Raspbian 8.3.0-6+rpi1) 8.3.0
+-> IPO/LTO, -march=native -mtune=native                                                 -> No IPO(LTO), -march=native -mtune=native             -> No IPO(LTO), -O2 -fomit-frame-pointer -fforce-addr -ffast-math
+------------------------------------------------------------------------                --------------------                                    --------------------
+1 CPU in system; running 1 parallel copy of tests                                       1 CPU in system; running 1 parallel copy of tests       1 CPU in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables        4057204.0 lps   (10.1 s, 7 samples)            995734.5 lps   (10.1 s, 7 samples)                     1171181.6 lps   (10.1 s, 7 samples)
+Double-Precision Whetstone                      323.4 MWIPS (10.0 s, 7 samples)               326.0 MWIPS (10.0 s, 7 samples)                         317.8 MWIPS (10.0 s, 7 samples)
 
 
 ########## QEMU 4x AArch64 Cortex-a57 (125 bogomips)
@@ -18,60 +20,104 @@ Double-Precision Whetstone                      326.0 MWIPS (10.0 s, 7 samples) 
 **In case of emulation, better optimization options had a negative effect on performance.**
 **Emulation of 64-bit ARM instructions slightly slower than 32-bit ones. But additional "cores" increase performance as expected.**
 
--> Options: -march=native -mtune=native                                                 -> Old options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math
-4 CPUs in system; running 1 parallel copy of tests                                      0 CPUs in system; running 1 parallel copy of tests
-Dhrystone 2 using register variables         995125.8 lps   (10.1 s, 7 samples)         Dhrystone 2 using register variables        1140629.3 lps   (10.1 s, 7 samples)
-Double-Precision Whetstone                      181.0 MWIPS (10.0 s, 7 samples)         Double-Precision Whetstone                      188.3 MWIPS (9.9 s, 7 samples)
+-> gcc (Debian 8.3.0-6) 8.3.0
+-> IPO/LTO, -march=native -mtune=native                                                 -> No IPO(LTO), -march=native -mtune=native             -> No IPO(LTO), -O2 -fomit-frame-pointer -fforce-addr -ffast-math
+------------------------------------------------------------------------                --------------------                                    --------------------
+4 CPUs in system; running 1 parallel copy of tests                                      4 CPUs in system; running 1 parallel copy of tests      0 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables        4380469.9 lps   (10.1 s, 7 samples)            995125.8 lps   (10.1 s, 7 samples)                     1140629.3 lps   (10.1 s, 7 samples)
+Double-Precision Whetstone                      179.8 MWIPS (10.0 s, 7 samples)               181.0 MWIPS (10.0 s, 7 samples)                         188.3 MWIPS (9.9 s, 7 samples)
 
-4 CPUs in system; running 4 parallel copies of tests                                    0 CPUs in system; running 4 parallel copies of tests
-Dhrystone 2 using register variables        3820216.9 lps   (10.2 s, 7 samples)         Dhrystone 2 using register variables        4451883.1 lps   (10.2 s, 7 samples)
-Double-Precision Whetstone                      705.1 MWIPS (9.9 s, 7 samples)          Double-Precision Whetstone                      739.7 MWIPS (10.0 s, 7 samples)
+------------------------------------------------------------------------                --------------------                                    --------------------
+4 CPUs in system; running 4 parallel copies of tests                                    4 CPUs in system; running 4 parallel copies of tests    0 CPUs in system; running 4 parallel copies of tests
+Dhrystone 2 using register variables       17096728.0 lps   (10.2 s, 7 samples)           3820216.9 lps   (10.2 s, 7 samples)                     4451883.1 lps   (10.2 s, 7 samples)
+Double-Precision Whetstone                      703.9 MWIPS (10.0 s, 7 samples)               705.1 MWIPS (9.9 s, 7 samples)                          739.7 MWIPS (10.0 s, 7 samples)
 
 
-########## Windows Subsystem for Linux (WSL) x86_64 12x Intel(R) Xeon(R) CPU E5-1650 @ 3.20GHz (6402 bogomips)
-
-**make -f Makefile-avx**
+########## Windows Subsystem for Linux (WSL) x86-64 12x Intel(R) Xeon(R) CPU E5-1650 @ 3.20GHz (6402 bogomips)
 
 -> Linux wsl 4.4.0-18362-Microsoft #476-Microsoft Fri Nov 01 16:53:00 PST 2019 x86_64 x86_64 x86_64 GNU/Linux
-12 CPUs in system; running 1 parallel copy of tests
-Dhrystone 2 using register variables       43113781.0 lps   (10.0 s, 7 samples)
-Double-Precision Whetstone                     4012.2 MWIPS (12.9 s, 7 samples)
 
-12 CPUs in system; running 12 parallel copies of tests
-Dhrystone 2 using register variables      286340392.6 lps   (10.0 s, 7 samples)
-Double-Precision Whetstone                    50072.7 MWIPS (9.8 s, 7 samples)
+-> gcc (Ubuntu 8.3.0-16ubuntu3~14.04.2) 8.3.0
+-> IPO/LTO, x86-64                                                                      -> IPO/LTO, x86-64 AVX                                  -> IPO/LTO, x86-64 AVX, sse+387                         -> IPO/LTO, x86-64 AVX, sse+387, unroll
+------------------------------------------------------------------------                --------------------                                    --------------------                                    --------------------
+12 CPUs in system; running 1 parallel copy of tests                                     12 CPUs in system; running 1 parallel copy of tests     12 CPUs in system; running 1 parallel copy of tests     12 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables      135260939.9 lps   (10.0 s, 7 samples)         135252867.5 lps   (10.0 s, 7 samples)                   135302541.7 lps   (10.0 s, 7 samples)                   130792679.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     5064.7 MWIPS (9.9 s, 7 samples)               5068.8 MWIPS (9.9 s, 7 samples)                         4350.0 MWIPS (10.1 s, 7 samples)                        4457.2 MWIPS (10.0 s, 7 samples)
+
+------------------------------------------------------------------------                --------------------                                    --------------------                                    --------------------
+12 CPUs in system; running 12 parallel copies of tests                                  12 CPUs in system; running 12 parallel copies of tests  12 CPUs in system; running 12 parallel copies of tests  12 CPUs in system; running 12 parallel copies of tests
+Dhrystone 2 using register variables      800211146.8 lps   (10.0 s, 7 samples)         798106475.7 lps   (10.0 s, 7 samples)                   800277172.5 lps   (10.0 s, 7 samples)                   808544203.2 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                    49690.5 MWIPS (9.8 s, 7 samples)              49704.5 MWIPS (9.8 s, 7 samples)                        47833.1 MWIPS (10.0 s, 7 samples)                       49078.0 MWIPS (10.0 s, 7 samples)
+
+-> gcc (Ubuntu 4.8.4-2ubuntu1~14.04.4) 4.8.4
+-> IPO/LTO, x86-64                                                                      -> IPO/LTO, x86-64 AVX                                  -> No IPO(LTO), x86-64 AVX
+------------------------------------------------------------------------                --------------------                                    --------------------
+12 CPUs in system; running 1 parallel copy of tests                                     12 CPUs in system; running 1 parallel copy of tests     12 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables       51762258.7 lps   (10.0 s, 7 samples)          51920150.1 lps   (10.0 s, 7 samples)                    43113781.0 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     3973.0 MWIPS (13.0 s, 7 samples)              4005.2 MWIPS (12.9 s, 7 samples)                        4012.2 MWIPS (12.9 s, 7 samples)
+
+------------------------------------------------------------------------                --------------------                                    --------------------
+12 CPUs in system; running 12 parallel copies of tests                                  12 CPUs in system; running 12 parallel copies of tests  12 CPUs in system; running 12 parallel copies of tests
+Dhrystone 2 using register variables      381157991.9 lps   (10.0 s, 7 samples)         381458955.4 lps   (10.0 s, 7 samples)                   286340392.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                    50077.6 MWIPS (9.8 s, 7 samples)              50074.8 MWIPS (9.8 s, 7 samples)                        50072.7 MWIPS (9.8 s, 7 samples)
 
 
 ########## Microsoft Hyper-V Debian Wheezy x86 12x Intel(R) Xeon(R) CPU E5-1650 @ 3.20GHz (6400 bogomips)
 
-**make -f Makefile-avx**
-
 -> Linux hyperv 3.16.0-10-686-pae #1 SMP Debian 3.16.74-1~deb7u1 (2019-09-30) i686 GNU/Linux
-12 CPUs in system; running 1 parallel copy of tests
-Dhrystone 2 using register variables       32720116.5 lps   (10.0 s, 7 samples)
-Double-Precision Whetstone                     4405.6 MWIPS (10.1 s, 7 samples)
 
-12 CPUs in system; running 12 parallel copies of tests
-Dhrystone 2 using register variables      209079355.6 lps   (10.0 s, 7 samples)
-Double-Precision Whetstone                    46880.8 MWIPS (10.1 s, 7 samples)
+-> gcc (Ubuntu 8.3.0-16ubuntu3~14.04.2) 8.3.0
+-> IPO/LTO, x86                                                                         -> IPO/LTO, x86 AVX                                     -> IPO/LTO, x86 AVX, sse+387                            -> IPO/LTO, x86 AVX, sse+387, unroll
+------------------------------------------------------------------------                --------------------                                    --------------------                                    --------------------
+12 CPUs in system; running 1 parallel copy of tests                                     12 CPUs in system; running 1 parallel copy of tests     12 CPUs in system; running 1 parallel copy of tests     12 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables       88938676.8 lps   (10.0 s, 7 samples)          89430027.1 lps   (10.0 s, 7 samples)                    88927268.3 lps   (10.0 s, 7 samples)                    89493555.8 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     4034.9 MWIPS (10.1 s, 7 samples)              4038.7 MWIPS (10.1 s, 7 samples)                        4277.7 MWIPS (10.1 s, 7 samples)                        4400.9 MWIPS (10.1 s, 7 samples)
+
+------------------------------------------------------------------------                --------------------                                    --------------------                                    --------------------
+12 CPUs in system; running 12 parallel copies of tests                                  12 CPUs in system; running 12 parallel copies of tests  12 CPUs in system; running 12 parallel copies of tests  12 CPUs in system; running 12 parallel copies of tests
+Dhrystone 2 using register variables      506937701.9 lps   (10.0 s, 7 samples)         509641806.4 lps   (10.0 s, 7 samples)                   507875730.9 lps   (10.0 s, 7 samples)                   507902941.9 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                    40486.5 MWIPS (10.1 s, 7 samples)             40499.4 MWIPS (10.0 s, 7 samples)                       45583.8 MWIPS (10.1 s, 7 samples)                       47743.3 MWIPS (10.2 s, 7 samples)
+
+-> gcc (Debian 4.7.2-5) 4.7.2
+-> IPO/LTO, x86                                                                         -> IPO/LTO, x86 AVX                                     -> No IPO(LTO), x86 AVX
+------------------------------------------------------------------------                --------------------                                    --------------------
+12 CPUs in system; running 1 parallel copy of tests                                     12 CPUs in system; running 1 parallel copy of tests     12 CPUs in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables       56971155.0 lps   (10.0 s, 7 samples)          56874519.5 lps   (10.0 s, 7 samples)                    32720116.5 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                     4404.9 MWIPS (10.1 s, 7 samples)              4381.5 MWIPS (10.1 s, 7 samples)                        4405.6 MWIPS (10.1 s, 7 samples)
+
+------------------------------------------------------------------------                --------------------                                    --------------------
+12 CPUs in system; running 12 parallel copies of tests                                  12 CPUs in system; running 12 parallel copies of tests  12 CPUs in system; running 12 parallel copies of tests
+Dhrystone 2 using register variables      373881890.9 lps   (10.0 s, 7 samples)         377653937.7 lps   (10.0 s, 7 samples)                   209079355.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                    46797.2 MWIPS (10.2 s, 7 samples)             46760.6 MWIPS (10.2 s, 7 samples)                       46880.8 MWIPS (10.1 s, 7 samples)
 
 
 ########## Intel Galileo 1x Intel Quark x1000 400MHz MCU (798 bogomips)
 
 **For Debian, there is an additional negative effect due to kernel compilation options such as PREEMPT, etc.**
-**make -f Makefile-galileo**
+**make -f Makefile-x86-galileo**
 
--> Yocto Linux										-> Debian Linux
--> Linux galileo 3.8.7-yocto-standard #1 Thu May 12 08:17:14 PDT 2016 i586 GNU/Linux	-> Linux galileo 3.8.7-assa #1 PREEMPT Tue Jul 2 11:58:20 MSK 2019 i586 GNU/Linux
-1 CPU in system; running 1 parallel copy of tests                                       1 CPU in system; running 1 parallel copy of tests
-Dhrystone 2 using register variables         513043.6 lps   (10.0 s, 7 samples)         Dhrystone 2 using register variables         448276.6 lps   (10.0 s, 7 samples)
-Double-Precision Whetstone                      164.1 MWIPS (9.9 s, 7 samples)          Double-Precision Whetstone                      163.3 MWIPS (9.9 s, 7 samples)
+-> Yocto Linux
+-> Linux galileo 3.8.7-yocto-standard #1 Thu May 12 08:17:14 PDT 2016 i586 GNU/Linux
+-> gcc 8.3.0, IPO/LTO, x86, unroll                                                      -> gcc 4.7.2, IPO/LTO, x86, unroll                      -> gcc 4.7.2, No IPO(LTO), x86, unroll
+------------------------------------------------------------------------                --------------------                                    --------------------
+1 CPU in system; running 1 parallel copy of tests                                       1 CPU in system; running 1 parallel copy of tests       1 CPU in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables        1095557.8 lps   (10.0 s, 7 samples)            653550.9 lps   (10.0 s, 7 samples)                      513043.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                      165.6 MWIPS (9.8 s, 7 samples)                164.3 MWIPS (9.9 s, 7 samples)                          164.1 MWIPS (9.9 s, 7 samples)
+
+-> Debian Linux
+-> Linux galileo 3.8.7-assa #1 PREEMPT Tue Jul 2 11:58:20 MSK 2019 i586 GNU/Linux
+-> gcc 8.3.0, IPO/LTO, x86, unroll                                                      -> gcc 4.7.2, IPO/LTO, x86, unroll                      -> gcc 4.7.2, No IPO(LTO), x86, unroll
+------------------------------------------------------------------------                --------------------                                    --------------------
+1 CPU in system; running 1 parallel copy of tests                                       1 CPU in system; running 1 parallel copy of tests       1 CPU in system; running 1 parallel copy of tests
+Dhrystone 2 using register variables        1114009.3 lps   (10.0 s, 7 samples)            549584.0 lps   (10.0 s, 7 samples)                      448276.6 lps   (10.0 s, 7 samples)
+Double-Precision Whetstone                      164.8 MWIPS (9.9 s, 7 samples)                163.3 MWIPS (9.9 s, 7 samples)                          163.3 MWIPS (9.9 s, 7 samples)
 
 
 ########## Raspberry Pi 1x ARM1176JZF-S 700-1000 MHz
 
 **Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
 
+------------------------------------------------------------------------
 1 CPU in system; running 1 parallel copy of tests
 Dhrystone 2 using register variables        2357526.3 lps   (10.0 s, 7 samples)
 Double-Precision Whetstone                      346.2 MWIPS (9.9 s, 7 samples)
@@ -81,10 +127,12 @@ Double-Precision Whetstone                      346.2 MWIPS (9.9 s, 7 samples)
 
 **Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
 
+------------------------------------------------------------------------
 4 CPUs in system; running 1 parallel copy of tests
 Dhrystone 2 using register variables        2871895.5 lps   (10.0 s, 7 samples)
 Double-Precision Whetstone                      430.7 MWIPS (9.5 s, 7 samples)
 
+------------------------------------------------------------------------
 4 CPUs in system; running 4 parallel copies of tests
 Dhrystone 2 using register variables        8042979.4 lps   (10.0 s, 7 samples)
 Double-Precision Whetstone                     1217.7 MWIPS (9.7 s, 7 samples)
@@ -94,10 +142,12 @@ Double-Precision Whetstone                     1217.7 MWIPS (9.7 s, 7 samples)
 
 **Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
 
+------------------------------------------------------------------------
 4 CPUs in system; running 1 parallel copy of tests
 Dhrystone 2 using register variables        4277736.0 lps   (10.0 s, 7 samples)
 Double-Precision Whetstone                      708.1 MWIPS (9.1 s, 7 samples)
 
+------------------------------------------------------------------------
 4 CPUs in system; running 4 parallel copies of tests
 Dhrystone 2 using register variables        8957839.0 lps   (10.0 s, 7 samples)
 Double-Precision Whetstone                     1575.1 MWIPS (9.7 s, 7 samples)
@@ -108,10 +158,12 @@ Double-Precision Whetstone                     1575.1 MWIPS (9.7 s, 7 samples)
 **Most likely with old optimization options: -O2 -fomit-frame-pointer -fforce-addr -ffast-math**
 **(https://gist.github.com/mmitou/3f88d9b1f462a024a626)**
 
+------------------------------------------------------------------------
 2 CPUs in system; running 1 parallel copy of tests
 Dhrystone 2 using register variables       25015421.9 lps   (10.0 s, 7 samples)
 Double-Precision Whetstone                     2791.6 MWIPS (10.0 s, 7 samples)
 
+------------------------------------------------------------------------
 2 CPUs in system; running 2 parallel copies of tests
 Dhrystone 2 using register variables       37145426.0 lps   (10.0 s, 7 samples)
 Double-Precision Whetstone                     5382.1 MWIPS (10.0 s, 7 samples)
